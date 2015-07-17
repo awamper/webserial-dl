@@ -131,16 +131,16 @@ def show_current_item(path):
 )
 @click.version_option()
 @click.argument(
-    'chapter_url',
+    'first_url',
     type=str,
     nargs=1
 )
-def main(name, part_length, split, directory, convert_to, max_chapters, chapter_url):
+def main(name, part_length, split, directory, convert_to, max_chapters, first_url):
     """ Download WordPress based webserials """
 
     paths = []
     chapters = []
-    next_url = chapter_url
+    next_url = first_url
 
     click.echo(click.style('Downloading "%s"...' % name, bg='blue'))
 
