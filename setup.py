@@ -20,7 +20,7 @@ from setuptools import setup
 
 setup(
     name='webserial-dl',
-    version='0.1',
+    version='0.2',
     py_modules=['webserial_dl'],
     install_requires=[
         'Click',

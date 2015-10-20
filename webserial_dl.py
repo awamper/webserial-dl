@@ -97,7 +97,7 @@ def show_current_item(path):
 @click.option(
     '-p',
     '--part-length',
-    default=130000,
+    default=180000,
     help='Size of a part of the book',
     show_default=True
 )
@@ -133,14 +133,21 @@ def show_current_item(path):
 @click.argument(
     'first_url',
     type=str,
-    nargs=1
+    nargs=-1
 )
 def main(name, part_length, split, directory, convert_to, max_chapters, first_url):
     """ Download WordPress based webserials """
 
     paths = []
     chapters = []
-    next_url = first_url
+    next_url = None
+    urls_list = None
+
+    if len(first_url) > 1:
+        urls_list = list(first_url)
+        next_url = urls_list.pop(0)
+    else:
+        next_url = first_url[0]
 
     click.echo(click.style('Downloading "%s"...' % name, bg='blue'))
 
@@ -163,7 +170,14 @@ def main(name, part_length, split, directory, convert_to, max_chapters, first_ur
 
         chapter = parse_chapter(response.text)
         chapters.append(chapter)
-        next_url = chapter['next_url']
+
+        if urls_list is not None:
+            try: 
+                next_url = urls_list.pop(0)
+            except IndexError:
+                next_url = None
+        else:
+            next_url = chapter['next_url']
 
         click.echo(click.style(
             '\tChapter "%s" done.' % chapter['text_title'],
