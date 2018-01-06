@@ -45,6 +45,12 @@ def parse_chapter(html_markup):
         if paragraph: content += '<p>%s</p>\n\n' % paragraph
 
     next_url = html.find('link', rel='next')
+
+    if not next_url:
+        next_url = html.find_all('a', rel='next', href=True, limit=1)
+        if next_url:
+            next_url = next_url[0]
+
     if next_url: next_url = next_url['href']
 
     return {
