@@ -1,3 +1,4 @@
+#! /usr/bin/env python3
 # coding: utf-8
 """
     Copyright 2015 Ivan awamper@gmail.com
@@ -33,7 +34,6 @@ def parse_chapter(html_markup):
     html = BeautifulSoup(html_markup, 'lxml')
 
     text_title = html.find(class_='entry-title').text
-    text_title = text_title.encode('utf-8')
     title = '<h1 class="chapter">{0}</h1>'.format(text_title)
     
     paragraphs = html.find(class_='entry-content').find_all('p')
@@ -41,7 +41,6 @@ def parse_chapter(html_markup):
         links = paragraph.find_all('a')
         for link in links: link.extract()
         paragraph = paragraph.text.strip()
-        paragraph = paragraph.encode('utf-8')
         if paragraph: content += '<p>%s</p>\n\n' % paragraph
 
     next_url = html.find('link', rel='next')
