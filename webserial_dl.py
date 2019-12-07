@@ -108,7 +108,7 @@ def show_current_item(path):
 )
 @click.option(
     '--split/--no-split',
-    default=True,
+    default=False,
     help='Should split book to smaller parts',
     show_default=True
 )
